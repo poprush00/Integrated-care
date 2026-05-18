@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>울산 방문재활 관리 플랫폼 | 울산광역시 방문재활 거점</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1A6FD4;
+    --blue-dark: #1055A8;
+    --blue-light: #E8F1FB;
+    --blue-mid: #3D8EF0;
+    --teal: #0EA5A0;
+    --teal-light: #E0F5F4;
+    --green: #16A34A;
+    --green-light: #DCFCE7;
+    --amber: #D97706;
+    --amber-light: #FEF3C7;
+    --red: #DC2626;
+    --red-light: #FEE2E2;
+    --gray-50: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-300: #CBD5E1;
+    --gray-400: #94A3B8;
+    --gray-500: #64748B;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1E293B;
+    --gray-900: #0F172A;
+    --white: #FFFFFF;
+    --sidebar-w: 240px;
+    --header-h: 60px;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--gray-50); color: var(--gray-800); font-size: 14px; }
+  
+  /* ── LOGIN ── */
+  #login-screen {
+    min-height: 100vh; display: flex; background: linear-gradient(135deg, #0F172A 0%, #1A6FD4 60%, #0EA5A0 100%);
+  }
+  .login-left {
+    flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px;
+    color: white; max-width: 520px;
+  }
+  .login-badge {
+    display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 6px 16px; font-size: 12px; font-weight: 500; margin-bottom: 28px; backdrop-filter: blur(8px);
+  }
+  .login-left h1 { font-size: 36px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
+  .login-left p { font-size: 15px; line-height: 1.8; opacity: 0.85; margin-bottom: 40px; }
+  .login-steps { display: flex; flex-direction: column; gap: 14px; }
+  .login-step {
+    display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 14px 18px; border: 1px solid rgba(255,255,255,0.12);
+  }
+  .login-step-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .login-step-text { font-size: 13px; line-height: 1.5; }
+  .login-step-title { font-weight: 600; margin-bottom: 2px; }
+  .login-step-desc { opacity: 0.7; font-size: 12px; }
+  
+  .login-right {
+    flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px;
+    background: rgba(255,255,255,0.04); backdrop-filter: blur(20px);
+  }
+  .login-card {
+    background: white; border-radius: 20px; padding: 44px 40px; width: 100%; max-width: 420px; box-shadow: var(--shadow-md);
+  }
+  .login-card-label { font-size: 12px; font-weight: 600; color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .login-card h2 { font-size: 26px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+  .login-card-sub { font-size: 13px; color: var(--gray-500); line-height: 1.6; margin-bottom: 32px; }
+  
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--gray-700); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; height: 46px; border: 1.5px solid var(--gray-200); border-radius: 10px; padding: 0 14px;
+    font-size: 14px; color: var(--gray-800); font-family: inherit; transition: all 0.2s; background: var(--gray-50);
+  }
+  .form-input:focus { outline: none; border-color: var(--blue); background: white; box-shadow: 0 0 0 3px rgba(26,111,212,0.1); }
+  .form-input::placeholder { color: var(--gray-400); }
+  
+  .btn-primary {
+    width: 100%; height: 48px; background: var(--blue); color: white; border: none; border-radius: 10px;
+    font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s; margin-bottom: 12px;
+  }
+  .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,111,212,0.3); }
+  .login-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .btn-outline {
+    height: 42px; background: white; color: var(--gray-700); border: 1.5px solid var(--gray-200); border-radius: 10px;
+    font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+  .btn-outline.blue { color: var(--blue); border-color: var(--blue-light); background: var(--blue-light); }
+  .btn-outline.blue:hover { background: var(--blue); color: white; }
+  
+  .auth-info { background: var(--gray-50); border-radius: 12px; padding: 18px; border: 1px solid var(--gray-200); margin-bottom: 16px; }
+  .auth-info-title { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 10px; }
+  .auth-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--gray-600); line-height: 1.5; margin-bottom: 6px; }
+  .auth-dot { width: 5px; height: 5px; background: var(--blue); border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .notice-box { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 10px; padding: 14px; }
+  .notice-title { font-size: 12px; font-weight: 600; color: #92400E; margin-bottom: 6px; }
+  .notice-text { font-size: 12px; color: #78350F; line-height: 1.6; }
+
+  /* ── APP SHELL ── */
+  #app { display: none; min-height: 100vh; }
+  .layout { display: flex; height: 100vh; overflow: hidden; }
+  
+  /* Sidebar */
+  .sidebar {
+    width: var(--sidebar-w); background: var(--gray-900); display: flex; flex-direction: column;
+    flex-shrink: 0; overflow-y: auto;
+  }
+  .sidebar-logo {
+    padding: 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .sidebar-logo-badge { font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 6px; letter-spacing: 0.06em; }
+  .sidebar-logo-title { font-size: 14px; font-weight: 700; color: white; line-height: 1.4; }
+  .sidebar-logo-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  
+  .sidebar-section { padding: 20px 10px 8px; }
+  .sidebar-section-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; padding: 0 8px; margin-bottom: 4px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; cursor: pointer;
+    color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 400; transition: all 0.15s; margin-bottom: 2px;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
+  .nav-item.active { background: var(--blue); color: white; font-weight: 500; }
+  .nav-item .nav-icon { font-size: 16px; flex-shrink: 0; }
+  .nav-badge { margin-left: auto; background: rgba(255,255,255,0.15); border-radius: 10px; padding: 1px 8px; font-size: 11px; }
+  .nav-item.active .nav-badge { background: rgba(255,255,255,0.25); }
+  
+  .sidebar-footer {
+    margin-top: auto; padding: 14px 10px; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .user-card { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+  .user-card:hover { background: rgba(255,255,255,0.07); }
+  .user-avatar { width: 32px; height: 32px; background: var(--blue); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: white; flex-shrink: 0; }
+  .user-name { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.9); }
+  .user-role { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+  
+  /* Header */
+  .main-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .topbar {
+    height: var(--header-h); background: white; border-bottom: 1px solid var(--gray-200); display: flex;
+    align-items: center; padding: 0 24px; gap: 16px; flex-shrink: 0;
+  }
+  .topbar-title { font-size: 16px; font-weight: 600; color: var(--gray-900); flex: 1; }
+  .topbar-actions { display: flex; align-items: center; gap: 8px; }
+  .topbar-btn {
+    height: 36px; padding: 0 16px; border-radius: 8px; border: 1.5px solid var(--gray-200);
+    background: white; font-size: 13px; font-weight: 500; color: var(--gray-600); cursor: pointer; font-family: inherit; transition: all 0.2s;
+  }
+  .topbar-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+  .topbar-btn.filled { background: var(--blue); color: white; border-color: var(--blue); }
+  .topbar-btn.filled:hover { background: var(--blue-dark); border-color: var(--blue-dark); transform: none; }
+  .topbar-icon-btn { width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid var(--gray-200); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--gray-600); font-size: 16px; transition: all 0.2s; }
+  .topbar-icon-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .notification-dot { width: 8px; height: 8px; background: var(--red); border-radius: 50%; position: absolute; top: 6px; right: 6px; }
+  
+  /* Content */
+  .main-content { flex: 1; overflow-y: auto; padding: 24px; }
+  
+  /* Pages */
+  .page { display: none; }
+  .page.active { display: block; }
+  
+  /* Dashboard */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-card { background: white; border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); border: 1px solid var(--gray-100); }
+  .stat-label { font-size: 12px; color: var(--gray-500); font-weight: 500; margin-bottom: 10px; }
+  .stat-value { font-size: 28px; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 8px; }
+  .stat-sub { font-size: 12px; color: var(--gray-500); display: flex; align-items: center; gap: 4px; }
+  .stat-up { color: var(--green); }
+  .stat-down { color: var(--red); }
+  .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 12px; }
+  .stat-icon.blue { background: var(--blue-light); }
+  .stat-icon.green { background: var(--green-light); }
+  .stat-icon.amber { background: var(--amber-light); }
+  .stat-icon.teal { background: var(--teal-light); }
+  
+  .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--gray-100); }
+  .card-header { padding: 18px 20px 0; display: flex; align-items: center; justify-content: space-between; }
+  .card-title { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+  .card-action { font-size: 12px; color: var(--blue); cursor: pointer; font-weight: 500; }
+  .card-body { padding: 16px 20px 20px; }
+  
+  /* Table */
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th { font-size: 11px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--gray-100); background: var(--gray-50); }
+  .data-table td { padding: 12px 12px; border-bottom: 1px solid var(--gray-100); font-size: 13px; color: var(--gray-700); vertical-align: middle; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--gray-50); }
+  
+  /* Badges */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge.green { background: var(--green-light); color: #166534; }
+  .badge.blue { background: var(--blue-light); color: var(--blue-dark); }
+  .badge.amber { background: var(--amber-light); color: #92400E; }
+  .badge.red { background: var(--red-light); color: #991B1B; }
+  .badge.gray { background: var(--gray-100); color: var(--gray-600); }
+  .badge.teal { background: var(--teal-light); color: #134E4A; }
+  
+  /* Recent activities */
+  .activity-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--gray-100); }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .activity-text { flex: 1; }
+  .activity-main { font-size: 13px; color: var(--gray-800); line-height: 1.4; }
+  .activity-time { font-size: 11px; color: var(--gray-400); margin-top: 3px; }
+  
+  /* Page toolbar */
+  .page-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .search-input-wrap { position: relative; flex: 1; min-width: 200px; }
+  .search-input {
+    width: 100%; height: 38px; border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 0 12px 0 36px;
+    font-size: 13px; color: var(--gray-800); font-family: inherit; background: white; transition: all 0.2s;
+  }
+  .search-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,111,212,0.08); }
+  .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: 15px; }
+  .filter-select {
+    height: 38px; border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 0 12px; font-size: 13px;
+    color: var(--gray-700); font-family: inherit; background: white; cursor: pointer;
+  }
+  .filter-select:focus { outline: none; border-color: var(--blue); }
+  
+  /* Client detail panel */
+  .detail-btn { height: 32px; padding: 0 12px; border-radius: 6px; border: 1.5px solid var(--gray-200); background: white; font-size: 12px; color: var(--gray-600); cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .detail-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .detail-btn.sm-primary { background: var(--blue); color: white; border-color: var(--blue); }
+  .detail-btn.sm-primary:hover { background: var(--blue-dark); }
+  
+  /* Form modals */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000;
+    backdrop-filter: blur(4px); display: none;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: white; border-radius: 16px; width: 560px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .modal-header { padding: 24px 24px 0; display: flex; align-items: center; justify-content: space-between; }
+  .modal-title { font-size: 17px; font-weight: 700; color: var(--gray-900); }
+  .modal-close { width: 32px; height: 32px; border: none; background: var(--gray-100); border-radius: 8px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; color: var(--gray-500); }
+  .modal-body { padding: 20px 24px 24px; }
+  .modal-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .modal-form-group { margin-bottom: 14px; }
+  .modal-form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: 6px; }
+  .modal-input {
+    width: 100%; height: 40px; border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 0 12px;
+    font-size: 13px; color: var(--gray-800); font-family: inherit; background: var(--gray-50);
+  }
+  .modal-input:focus { outline: none; border-color: var(--blue); background: white; }
+  .modal-textarea {
+    width: 100%; min-height: 80px; border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 10px 12px;
+    font-size: 13px; color: var(--gray-800); font-family: inherit; resize: vertical; background: var(--gray-50);
+  }
+  .modal-textarea:focus { outline: none; border-color: var(--blue); background: white; }
+  .modal-select {
+    width: 100%; height: 40px; border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 0 12px;
+    font-size: 13px; color: var(--gray-700); font-family: inherit; background: var(--gray-50); cursor: pointer;
+  }
+  .modal-select:focus { outline: none; border-color: var(--blue); }
+  .modal-footer { display: flex; gap: 10px; justify-content: flex-end; padding-top: 8px; }
+  .modal-btn { height: 40px; padding: 0 20px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .modal-btn.cancel { background: var(--gray-100); color: var(--gray-700); border: none; }
+  .modal-btn.submit { background: var(--blue); color: white; border: none; }
+  .modal-btn.submit:hover { background: var(--blue-dark); }
+  .section-divider { font-size: 11px; font-weight: 700; color: var(--gray-400); letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 0 10px; margin-top: 6px; border-top: 1px solid var(--gray-100); }
+
+  /* Schedule grid */
+  .schedule-grid { display: grid; grid-template-columns: 80px repeat(7, 1fr); border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; }
+  .sched-header { background: var(--gray-50); padding: 10px 8px; text-align: center; font-size: 12px; font-weight: 600; color: var(--gray-600); border-bottom: 1px solid var(--gray-200); border-right: 1px solid var(--gray-200); }
+  .sched-time { background: var(--gray-50); padding: 12px 8px; text-align: right; font-size: 11px; color: var(--gray-400); border-bottom: 1px solid var(--gray-100); border-right: 1px solid var(--gray-200); }
+  .sched-cell { padding: 4px 4px; border-bottom: 1px solid var(--gray-100); border-right: 1px solid var(--gray-100); min-height: 50px; }
+  .sched-event { background: var(--blue-light); border-left: 3px solid var(--blue); border-radius: 4px; padding: 3px 6px; font-size: 10px; color: var(--blue-dark); margin-bottom: 2px; cursor: pointer; }
+  .sched-event.green { background: var(--green-light); border-color: var(--green); color: #166534; }
+  .sched-event.amber { background: var(--amber-light); border-color: var(--amber); color: #92400E; }
+  .sched-event-name { font-weight: 600; }
+  
+  /* Journal form */
+  .journal-section { background: white; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--gray-100); margin-bottom: 16px; }
+  .journal-section-header { padding: 14px 18px; border-bottom: 1px solid var(--gray-100); font-size: 13px; font-weight: 600; color: var(--gray-800); display: flex; align-items: center; gap: 8px; }
+  .journal-section-body { padding: 16px 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .form-group-sm label { font-size: 12px; font-weight: 500; color: var(--gray-600); margin-bottom: 5px; display: block; }
+  .form-ctrl { width: 100%; height: 38px; border: 1.5px solid var(--gray-200); border-radius: 7px; padding: 0 11px; font-size: 13px; color: var(--gray-800); font-family: inherit; background: var(--gray-50); }
+  .form-ctrl:focus { outline: none; border-color: var(--blue); background: white; }
+  textarea.form-ctrl { height: 80px; padding: 9px 11px; resize: vertical; }
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .checkbox-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-700); cursor: pointer; }
+  .checkbox-item input { accent-color: var(--blue); }
+  
+  /* Rating bars */
+  .rating-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .rating-label { font-size: 12px; color: var(--gray-600); width: 120px; flex-shrink: 0; }
+  .rating-track { flex: 1; height: 8px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+  .rating-fill { height: 100%; background: var(--blue); border-radius: 4px; }
+  .rating-value { font-size: 12px; font-weight: 600; color: var(--gray-700); width: 30px; text-align: right; }
+
+  /* Billing table */
+  .billing-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .billing-box { background: white; border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px; text-align: center; }
+  .billing-box-label { font-size: 11px; color: var(--gray-500); font-weight: 500; margin-bottom: 6px; }
+  .billing-box-value { font-size: 22px; font-weight: 700; color: var(--gray-900); }
+  .billing-box-value.blue { color: var(--blue); }
+  .billing-box-value.green { color: var(--green); }
+  .billing-box-value.amber { color: var(--amber); }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; background: var(--gray-900); color: white; padding: 14px 20px;
+    border-radius: 10px; font-size: 13px; font-weight: 500; box-shadow: var(--shadow-md); z-index: 2000;
+    transform: translateY(20px); opacity: 0; transition: all 0.3s; pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { background: #166534; }
+
+  /* Progress ring */
+  .progress-ring { display: inline-flex; align-items: center; justify-content: center; position: relative; }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+    .sidebar { width: 60px; }
+    .sidebar .nav-item span, .sidebar .sidebar-logo-title, .sidebar .sidebar-logo-sub, .sidebar .sidebar-logo-badge, .sidebar .sidebar-section-label, .sidebar .user-name, .sidebar .user-role, .sidebar .nav-badge { display: none; }
+    .sidebar-logo { padding: 14px 10px; }
+    .sidebar-section { padding: 12px 6px 4px; }
+    .nav-item { justify-content: center; padding: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-left">
+    <div class="login-badge">Ulsan Rehabilitation Care Hub</div>
+    <h1>울산 방문재활<br>대상자 관리 플랫폼</h1>
+    <p>울산광역시 5개 구·군의 의뢰 대상자 등록부터 거점 운영, 치료사 매칭, 회차별 활동일지 작성, 평가기록과 출력까지 한 번에 관리하는 방문재활 업무관리 시스템입니다.</p>
+    <div class="login-steps">
+      <div class="login-step">
+        <div class="login-step-icon">🏛️</div>
+        <div class="login-step-text">
+          <div class="login-step-title">STEP 1 · 지자체 의뢰 접수</div>
+          <div class="login-step-desc">대상자 의뢰 및 서비스 요청 등록</div>
+        </div>
+      </div>
+      <div class="login-step">
+        <div class="login-step-icon">🏥</div>
+        <div class="login-step-text">
+          <div class="login-step-title">STEP 2 · 울산 거점 및 권역 관리</div>
+          <div class="login-step-desc">권역 승인, 치료사 배정, 일정 관리</div>
+        </div>
+      </div>
+      <div class="login-step">
+        <div class="login-step-icon">👤</div>
+        <div class="login-step-text">
+          <div class="login-step-title">STEP 3 · 대상자 방문 서비스</div>
+          <div class="login-step-desc">활동일지, 평가지, 결과 보고까지 기록</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="login-right">
+    <div class="login-card">
+      <div class="login-card-label">로그인</div>
+      <h2>계정으로 접속하세요</h2>
+      <p class="login-card-sub">울산 거점 소속과 권한에 따라 접속 가능한 메뉴와 대상자 정보가 자동으로 구분됩니다.</p>
+      
+      <div class="form-group">
+        <label class="form-label">이메일</label>
+        <input class="form-input" type="email" placeholder="example@email.com" id="login-email" value="admin@ulsan-rehab.kr">
+      </div>
+      <div class="form-group">
+        <label class="form-label">비밀번호</label>
+        <input class="form-input" type="password" placeholder="비밀번호 입력" id="login-pw" value="••••••••">
+      </div>
+      <button class="btn-primary" onclick="doLogin()">로그인</button>
+      <div class="login-btns">
+        <button class="btn-outline">회원가입 신청</button>
+        <button class="btn-outline blue">도입 문의</button>
+      </div>
+      
+      <div class="auth-info">
+        <div class="auth-info-title">권한별 접속 구조</div>
+        <div class="auth-item"><div class="auth-dot"></div><span>울산광역시회 관리자: 전체 권한 결정 및 최종 승인</span></div>
+        <div class="auth-item"><div class="auth-dot"></div><span>구·군 담당자: 담당 지역 의뢰, 대상자, 보고 확인</span></div>
+        <div class="auth-item"><div class="auth-dot"></div><span>팀장 치료사: 방문 치료사 배정, 활동 승인, 평가 검토</span></div>
+        <div class="auth-item"><div class="auth-dot"></div><span>방문 치료사: 일정 확인, 활동일지 및 평가자료 작성</span></div>
+        <div class="auth-item"><div class="auth-dot"></div><span>회계 담당자: 비용청구, 정산, 지자체 청구자료 관리</span></div>
+        <div class="auth-item"><div class="auth-dot"></div><span>지자체 확인용 계정: 의뢰 현황과 결과 보고 확인</span></div>
+      </div>
+      <div class="notice-box">
+        <div class="notice-title">회원가입 및 권한 안내</div>
+        <div class="notice-text">회원가입 시 소속 기관, 담당 구·군, 직종, 면허번호, 희망 권한을 신청할 수 있으며 실제 권한은 울산광역시회 관리자가 최종 결정합니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <div class="layout">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-badge">울산 방문재활 거점</div>
+        <div class="sidebar-logo-title">울산광역시</div>
+        <div class="sidebar-logo-sub">방문재활 관리 플랫폼</div>
+      </div>
+      
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">메인</div>
+        <div class="nav-item active" onclick="showPage('dashboard', this)">
+          <span class="nav-icon">📊</span><span>대시보드</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">대상자</div>
+        <div class="nav-item" onclick="showPage('clients', this)">
+          <span class="nav-icon">👥</span><span>대상자 관리</span><span class="nav-badge">48</span>
+        </div>
+        <div class="nav-item" onclick="showPage('referrals', this)">
+          <span class="nav-icon">📋</span><span>의뢰서 접수</span><span class="nav-badge">5</span>
+        </div>
+        <div class="nav-item" onclick="showPage('consents', this)">
+          <span class="nav-icon">📄</span><span>보호자 동의서 관리</span><span class="nav-badge">7</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">지자체</div>
+        <div class="nav-item" onclick="showPage('municipalities', this)">
+          <span class="nav-icon">🏛️</span><span>지자체별 관리</span>
+        </div>
+        <div class="nav-item" onclick="showPage('district-managers', this)">
+          <span class="nav-icon">🧑‍💼</span><span>구·군 담당자 관리</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">치료사</div>
+        <div class="nav-item" onclick="showPage('therapists', this)">
+          <span class="nav-icon">🩺</span><span>치료사 관리</span>
+        </div>
+        <div class="nav-item" onclick="showPage('schedule', this)">
+          <span class="nav-icon">📅</span><span>일정 배정</span>
+        </div>
+        <div class="nav-item" onclick="showPage('activity-approval', this)">
+          <span class="nav-icon">✅</span><span>치료사 활동 승인</span><span class="nav-badge">12</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">기록</div>
+        <div class="nav-item" onclick="showPage('journal', this)">
+          <span class="nav-icon">📝</span><span>활동일지</span>
+        </div>
+        <div class="nav-item" onclick="showPage('evaluation', this)">
+          <span class="nav-icon">📈</span><span>평가자료</span>
+        </div>
+        <div class="nav-item" onclick="showPage('billing', this)">
+          <span class="nav-icon">💰</span><span>비용청구</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">보고</div>
+        <div class="nav-item" onclick="showPage('completion-reports', this)">
+          <span class="nav-icon">📑</span><span>서비스 종결 보고</span><span class="nav-badge">3</span>
+        </div>
+        <div class="nav-item" onclick="showPage('monthly-reports', this)">
+          <span class="nav-icon">📊</span><span>월별 실적 보고</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">설정</div>
+        <div class="nav-item" onclick="showPage('settings', this)">
+          <span class="nav-icon">⚙️</span><span>시스템 설정</span>
+        </div>
+      </div>
+      
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">노</div>
+          <div>
+            <div class="user-name">노병환</div>
+            <div class="user-role">울산광역시회 관리자</div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Main -->
+    <div class="main-wrap">
+      <div class="topbar">
+        <div class="topbar-title" id="page-title">대시보드</div>
+        <div class="topbar-actions">
+          <div class="topbar-icon-btn" style="position:relative" title="알림">🔔<div class="notification-dot"></div></div>
+          <div class="topbar-icon-btn" title="검색">🔍</div>
+          <button class="topbar-btn" onclick="doLogout()">로그아웃</button>
+        </div>
+      </div>
+      
+      <div class="main-content">
+
+        <!-- DASHBOARD -->
+        <div class="page active" id="page-dashboard">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon blue">👥</div>
+              <div class="stat-label">총 대상자</div>
+              <div class="stat-value">48</div>
+              <div class="stat-sub"><span class="stat-up">▲ 3</span> 이번 달</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon green">✅</div>
+              <div class="stat-label">활동 중인 치료사</div>
+              <div class="stat-value">12</div>
+              <div class="stat-sub"><span class="stat-up">▲ 1</span> 이번 달</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon amber">📝</div>
+              <div class="stat-label">이번 달 방문 횟수</div>
+              <div class="stat-value">186</div>
+              <div class="stat-sub"><span class="stat-up">▲ 12</span> 전월 대비</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon teal">💰</div>
+              <div class="stat-label">청구 예정 금액</div>
+              <div class="stat-value" style="font-size:22px">4.2M</div>
+              <div class="stat-sub">원 / <span class="stat-up">확인 필요 3건</span></div>
+            </div>
+          </div>
+          
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">최근 대상자 현황</div>
+                <div class="card-action" onclick="showPage('clients', document.querySelector('[onclick*=clients]'))">전체보기 →</div>
+              </div>
+              <div class="card-body" style="padding-top:12px">
+                <table class="data-table">
+                  <thead>
+                    <tr><th>이름</th><th>지역</th><th>치료사</th><th>상태</th><th>최근방문</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><b>홍길동</b> (65)</td><td>중구 태화동</td><td>이민정</td><td><span class="badge green">진행중</span></td><td>2025.05.13</td></tr>
+                    <tr><td><b>김영숙</b> (72)</td><td>남구 삼산동</td><td>박준혁</td><td><span class="badge green">진행중</span></td><td>2025.05.12</td></tr>
+                    <tr><td><b>이철수</b> (58)</td><td>북구 화봉동</td><td>최은지</td><td><span class="badge amber">검토중</span></td><td>2025.05.10</td></tr>
+                    <tr><td><b>박순희</b> (80)</td><td>동구 전하동</td><td>배정 전</td><td><span class="badge blue">신규접수</span></td><td>-</td></tr>
+                    <tr><td><b>정명화</b> (67)</td><td>울주군 범서읍</td><td>김도현</td><td><span class="badge green">진행중</span></td><td>2025.05.11</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">최근 활동</div>
+              </div>
+              <div class="card-body" style="padding-top:12px">
+                <div class="activity-item">
+                  <div class="activity-icon blue" style="background:var(--blue-light)">📋</div>
+                  <div class="activity-text">
+                    <div class="activity-main">홍길동 님 5월 활동일지 제출</div>
+                    <div class="activity-time">치료사 이민정 · 방금 전</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon" style="background:var(--green-light)">✅</div>
+                  <div class="activity-text">
+                    <div class="activity-main">신규 의뢰서 1건 접수 (박순희)</div>
+                    <div class="activity-time">중구 보건소 · 1시간 전</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon" style="background:var(--amber-light)">📅</div>
+                  <div class="activity-text">
+                    <div class="activity-main">최은지 치료사 5월 일정 변경</div>
+                    <div class="activity-time">관리자 승인 필요 · 2시간 전</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon" style="background:var(--teal-light)">📈</div>
+                  <div class="activity-text">
+                    <div class="activity-main">김영숙 FIM 평가 업데이트</div>
+                    <div class="activity-time">치료사 박준혁 · 어제</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon" style="background:var(--red-light)">💰</div>
+                  <div class="activity-text">
+                    <div class="activity-main">4월 비용청구 검토 요청 3건</div>
+                    <div class="activity-time">회계담당 · 2일 전</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">구·군별 대상자 분포 현황</div>
+            </div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:4px">
+                <div style="text-align:center;padding:16px 8px;background:var(--blue-light);border-radius:10px">
+                  <div style="font-size:24px;font-weight:700;color:var(--blue)">9</div>
+                  <div style="font-size:12px;color:var(--gray-600);margin-top:4px;font-weight:500">중구</div>
+                </div>
+                <div style="text-align:center;padding:16px 8px;background:var(--teal-light);border-radius:10px">
+                  <div style="font-size:24px;font-weight:700;color:var(--teal)">13</div>
+                  <div style="font-size:12px;color:var(--gray-600);margin-top:4px;font-weight:500">남구</div>
+                </div>
+                <div style="text-align:center;padding:16px 8px;background:var(--green-light);border-radius:10px">
+                  <div style="font-size:24px;font-weight:700;color:var(--green)">7</div>
+                  <div style="font-size:12px;color:var(--gray-600);margin-top:4px;font-weight:500">동구</div>
+                </div>
+                <div style="text-align:center;padding:16px 8px;background:var(--amber-light);border-radius:10px">
+                  <div style="font-size:24px;font-weight:700;color:var(--amber)">8</div>
+                  <div style="font-size:12px;color:var(--gray-600);margin-top:4px;font-weight:500">북구</div>
+                </div>
+                <div style="text-align:center;padding:16px 8px;background:var(--gray-100);border-radius:10px">
+                  <div style="font-size:24px;font-weight:700;color:var(--gray-700)">11</div>
+                  <div style="font-size:12px;color:var(--gray-600);margin-top:4px;font-weight:500">울주군</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CLIENTS PAGE -->
+        <div class="page" id="page-clients">
+          <div class="page-toolbar">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" placeholder="이름, 주소, 진단명으로 검색...">
+            </div>
+            <select class="filter-select"><option>전체 구·군</option><option>중구</option><option>남구</option><option>북구</option><option>동구</option><option>울주군</option></select>
+            <select class="filter-select"><option>전체 상태</option><option>진행중</option><option>신규접수</option><option>검토중</option><option>종결</option></select>
+            <button class="topbar-btn filled" onclick="openModal('modal-add-client')">+ 대상자 등록</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead>
+                  <tr><th>번호</th><th>이름/나이</th><th>주소</th><th>진단명</th><th>담당 치료사</th><th>상태</th><th>등록일</th><th>관리</th></tr>
+                </thead>
+                <tbody id="clients-table-body">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- REFERRALS PAGE -->
+        <div class="page" id="page-referrals">
+          <div class="page-toolbar">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" placeholder="의뢰기관, 대상자 이름으로 검색...">
+            </div>
+            <select class="filter-select"><option>전체 상태</option><option>검토 대기</option><option>승인됨</option><option>반려</option></select>
+            <button class="topbar-btn filled" onclick="openModal('modal-add-referral')">+ 의뢰서 등록</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead>
+                  <tr><th>접수번호</th><th>의뢰기관</th><th>대상자명</th><th>의뢰일</th><th>진단명</th><th>서비스 유형</th><th>상태</th><th>처리</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>REF-2025-048</td><td>중구 보건소</td><td>박순희 (80세)</td><td>2025.05.13</td><td>뇌경색 후 편마비</td><td>방문물리치료</td><td><span class="badge amber">검토 대기</span></td><td><button class="detail-btn">검토</button></td></tr>
+                  <tr><td>REF-2025-047</td><td>남구 보건소</td><td>김태호 (71세)</td><td>2025.05.11</td><td>무릎관절 인공치환술 후</td><td>방문물리치료</td><td><span class="badge amber">검토 대기</span></td><td><button class="detail-btn">검토</button></td></tr>
+                  <tr><td>REF-2025-046</td><td>북구청</td><td>이수연 (65세)</td><td>2025.05.09</td><td>파킨슨병</td><td>재활운동지도</td><td><span class="badge blue">승인됨</span></td><td><button class="detail-btn sm-primary">배정</button></td></tr>
+                  <tr><td>REF-2025-045</td><td>동구 보건소</td><td>최병철 (77세)</td><td>2025.05.08</td><td>낙상 후 대퇴골 골절</td><td>방문물리치료</td><td><span class="badge green">진행중</span></td><td><button class="detail-btn">보기</button></td></tr>
+                  <tr><td>REF-2025-044</td><td>울주군 복지관</td><td>조명자 (69세)</td><td>2025.05.07</td><td>당뇨성 말초신경병증</td><td>가정방문재활</td><td><span class="badge green">진행중</span></td><td><button class="detail-btn">보기</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- THERAPISTS PAGE -->
+        <div class="page" id="page-therapists">
+          <div class="page-toolbar">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" placeholder="치료사 이름, 면허번호로 검색...">
+            </div>
+            <select class="filter-select"><option>전체 권역</option><option>중구</option><option>남구</option><option>북구</option><option>동구</option><option>울주군</option></select>
+            <select class="filter-select"><option>전체 상태</option><option>활동중</option><option>대기중</option><option>휴직</option></select>
+            <button class="topbar-btn filled" onclick="openModal('modal-add-therapist')">+ 치료사 등록</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+            <div class="card" style="cursor:pointer" onclick="openModal('modal-therapist-detail')">
+              <div class="card-body">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                  <div style="width:48px;height:48px;background:var(--blue-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--blue)">이</div>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--gray-900)">이민정</div>
+                    <div style="font-size:12px;color:var(--gray-500)">물리치료사 · 면허 PT-28341</div>
+                  </div>
+                  <span class="badge green" style="margin-left:auto">활동중</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+                  <div style="background:var(--gray-50);border-radius:8px;padding:10px">
+                    <div style="color:var(--gray-500);margin-bottom:3px">담당 대상자</div>
+                    <div style="font-size:18px;font-weight:700;color:var(--gray-900)">6명</div>
+                  </div>
+                  <div style="background:var(--gray-50);border-radius:8px;padding:10px">
+                    <div style="color:var(--gray-500);margin-bottom:3px">이번 달 방문</div>
+                    <div style="font-size:18px;font-weight:700;color:var(--blue)">24회</div>
+                  </div>
+                </div>
+                <div style="margin-top:12px;font-size:12px;color:var(--gray-500)">📍 담당구역: 중구, 남구</div>
+              </div>
+            </div>
+            <div class="card" style="cursor:pointer">
+              <div class="card-body">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                  <div style="width:48px;height:48px;background:var(--teal-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--teal)">박</div>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--gray-900)">박준혁</div>
+                    <div style="font-size:12px;color:var(--gray-500)">물리치료사 · 면허 PT-31205</div>
+                  </div>
+                  <span class="badge green" style="margin-left:auto">활동중</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+                  <div style="background:var(--gray-50);border-radius:8px;padding:10px">
+                    <div style="color:var(--gray-500);margin-bottom:3px">담당 대상자</div>
+                    <div style="font-size:18px;font-weight:700;color:var(--gray-900)">5명</div>
+                  </div>
+                  <div style="background:var(--gray-50);border-radius:8px;padding:10px">
+                    <div style="color:var(--gray-500);margin-bottom:3px">이번 달 방문</div>
+                    <div style="font-size:18px;font-weight:700;color:var(--blue)">20회</div>
+                  </div>
+                </div>
+                <div style="margin-top:12px;font-size:12px;color:var(--gray-500)">📍 담당구역: 남구, 북구</div>
+              </div>
+            </div>
+            <div class="card" style="cursor:pointer">
+              <div class="card-body">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                  <div style="width:48px;height:48px;background:var(--green-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--green)">최</div>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--gray-900)">최은지</div>
+                    <div style="font-size:12px;color:var(--gray-500)">물리치료사 · 면허 PT-29874</div>
+                  </div>
+                  <span class="badge amber" style="margin-left:auto">검토중</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+                  <div style="background:var(--gray-50);border-radius:8px;padding:10px">
+                    <div style="color:var(--gray-500);margin-bottom:3px">담당 대상자</div>
+                    <div style="font-size:18px;font-weight:700;color:var(--gray-900)">4명</div>
+                  </div>
+                  <div style="background:var(--gray-50);border-radius:8px;padding:10px">
+                    <div style="color:var(--gray-500);margin-bottom:3px">이번 달 방문</div>
+                    <div style="font-size:18px;font-weight:700;color:var(--blue)">16회</div>
+                  </div>
+                </div>
+                <div style="margin-top:12px;font-size:12px;color:var(--gray-500)">📍 담당구역: 북구, 동구</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCHEDULE PAGE -->
+        <div class="page" id="page-schedule">
+          <div class="page-toolbar">
+            <button class="topbar-btn">◀ 이전 주</button>
+            <div style="font-size:15px;font-weight:600;color:var(--gray-800);flex:1;text-align:center">2025년 5월 12일 ~ 18일</div>
+            <button class="topbar-btn">다음 주 ▶</button>
+            <button class="topbar-btn filled" onclick="openModal('modal-add-schedule')">+ 일정 추가</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0;overflow-x:auto">
+              <div class="schedule-grid" style="min-width:700px">
+                <div class="sched-header">시간</div>
+                <div class="sched-header">월(12)</div>
+                <div class="sched-header">화(13)</div>
+                <div class="sched-header">수(14)</div>
+                <div class="sched-header">목(15)</div>
+                <div class="sched-header">금(16)</div>
+                <div class="sched-header">토(17)</div>
+                <div class="sched-header">일(18)</div>
+                
+                <div class="sched-time">09:00</div>
+                <div class="sched-cell"><div class="sched-event"><div class="sched-event-name">홍길동</div><div>이민정</div></div></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"><div class="sched-event"><div class="sched-event-name">홍길동</div><div>이민정</div></div></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"><div class="sched-event"><div class="sched-event-name">홍길동</div><div>이민정</div></div></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"></div>
+                
+                <div class="sched-time">10:00</div>
+                <div class="sched-cell"><div class="sched-event green"><div class="sched-event-name">김영숙</div><div>박준혁</div></div></div>
+                <div class="sched-cell"><div class="sched-event"><div class="sched-event-name">이철수</div><div>최은지</div></div></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"><div class="sched-event green"><div class="sched-event-name">김영숙</div><div>박준혁</div></div></div>
+                <div class="sched-cell"><div class="sched-event"><div class="sched-event-name">이철수</div><div>최은지</div></div></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"></div>
+                
+                <div class="sched-time">11:00</div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"><div class="sched-event amber"><div class="sched-event-name">정명화</div><div>김도현</div></div></div>
+                <div class="sched-cell"><div class="sched-event green"><div class="sched-event-name">박순례</div><div>박준혁</div></div></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"></div>
+                
+                <div class="sched-time">14:00</div>
+                <div class="sched-cell"><div class="sched-event amber"><div class="sched-event-name">최병철</div><div>이민정</div></div></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"><div class="sched-event amber"><div class="sched-event-name">최병철</div><div>이민정</div></div></div>
+                <div class="sched-cell"><div class="sched-event"><div class="sched-event-name">조명자</div><div>김도현</div></div></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"></div>
+                <div class="sched-cell"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- JOURNAL PAGE -->
+        <div class="page" id="page-journal">
+          <div class="page-toolbar">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" placeholder="대상자명, 치료사명으로 검색...">
+            </div>
+            <select class="filter-select"><option>전체 상태</option><option>작성완료</option><option>임시저장</option><option>반려</option></select>
+            <button class="topbar-btn filled" onclick="showJournalForm()">+ 활동일지 작성</button>
+          </div>
+          
+          <div id="journal-list">
+            <div class="card">
+              <div class="card-body" style="padding:0">
+                <table class="data-table">
+                  <thead>
+                    <tr><th>일지번호</th><th>대상자</th><th>치료사</th><th>방문일</th><th>치료 내용</th><th>회차</th><th>상태</th><th>관리</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>JNL-2025-1842</td><td>홍길동</td><td>이민정</td><td>2025.05.13</td><td>하지 근력 강화, 보행 훈련</td><td>18회차</td><td><span class="badge green">제출완료</span></td><td><button class="detail-btn">보기</button> <button class="detail-btn">출력</button></td></tr>
+                    <tr><td>JNL-2025-1841</td><td>김영숙</td><td>박준혁</td><td>2025.05.12</td><td>관절가동범위 운동, 통증관리</td><td>12회차</td><td><span class="badge green">제출완료</span></td><td><button class="detail-btn">보기</button> <button class="detail-btn">출력</button></td></tr>
+                    <tr><td>JNL-2025-1840</td><td>정명화</td><td>김도현</td><td>2025.05.12</td><td>균형 훈련, 낙상 예방 교육</td><td>8회차</td><td><span class="badge amber">임시저장</span></td><td><button class="detail-btn sm-primary" onclick="showJournalForm()">편집</button></td></tr>
+                    <tr><td>JNL-2025-1839</td><td>최병철</td><td>이민정</td><td>2025.05.11</td><td>골절 후 재활운동, 통증평가</td><td>5회차</td><td><span class="badge green">제출완료</span></td><td><button class="detail-btn">보기</button> <button class="detail-btn">출력</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          <div id="journal-form-wrap" style="display:none">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+              <button class="topbar-btn" onclick="hideJournalForm()">← 목록으로</button>
+              <span style="font-size:16px;font-weight:600;color:var(--gray-800)">방문재활 활동일지 작성</span>
+            </div>
+            
+            <div class="journal-section">
+              <div class="journal-section-header">📋 기본 정보</div>
+              <div class="journal-section-body">
+                <div class="form-row">
+                  <div class="form-group-sm"><label>대상자</label><select class="form-ctrl"><option>홍길동 (중구 태화동)</option><option>김영숙 (남구 삼산동)</option><option>정명화 (울주군 범서읍)</option></select></div>
+                  <div class="form-group-sm"><label>담당 치료사</label><select class="form-ctrl"><option>이민정</option><option>박준혁</option><option>최은지</option><option>김도현</option></select></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group-sm"><label>방문 일자</label><input type="date" class="form-ctrl" value="2025-05-15"></div>
+                  <div class="form-group-sm"><label>방문 시간</label><input type="time" class="form-ctrl" value="09:30"></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group-sm"><label>방문 회차</label><input type="number" class="form-ctrl" value="19"></div>
+                  <div class="form-group-sm"><label>치료 시간(분)</label><input type="number" class="form-ctrl" value="60"></div>
+                </div>
+                <div class="form-group-sm">
+                  <label>방문 목적</label>
+                  <select class="form-ctrl">
+                    <option>정기 방문재활</option>
+                    <option>초기 평가</option>
+                    <option>상태 변화 확인</option>
+                    <option>종결 전 평가</option>
+                    <option>보호자 교육</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="journal-section">
+              <div class="journal-section-header">🩺 대상자 상태 확인</div>
+              <div class="journal-section-body">
+                <div class="form-group-sm">
+                  <label>대상자 상태 확인</label>
+                  <div class="checkbox-group" style="margin-top:6px">
+                    <label class="checkbox-item"><input type="radio" name="condition" checked> 양호</label>
+                    <label class="checkbox-item"><input type="radio" name="condition"> 보통</label>
+                    <label class="checkbox-item"><input type="radio" name="condition"> 불량</label>
+                    <label class="checkbox-item"><input type="radio" name="condition"> 관찰 필요</label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group-sm"><label>혈압 (수축기)</label><input type="number" class="form-ctrl" placeholder="mmHg"></div>
+                  <div class="form-group-sm"><label>혈압 (이완기)</label><input type="number" class="form-ctrl" placeholder="mmHg"></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group-sm"><label>맥박 (회/분)</label><input type="number" class="form-ctrl" placeholder="bpm"></div>
+                  <div class="form-group-sm"><label>통증 수준 (NRS 0-10)</label><input type="number" class="form-ctrl" min="0" max="10" placeholder="0-10"></div>
+                </div>
+                <div class="form-group-sm">
+                  <label>혈압/맥박/통증 관련 메모</label>
+                  <textarea class="form-ctrl" placeholder="측정이 어려웠거나 추가 관찰이 필요한 내용을 기록해 주세요."></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <div class="journal-section">
+              <div class="journal-section-header">💪 방문재활 수행 항목</div>
+              <div class="journal-section-body">
+                <div class="form-group-sm" style="margin-bottom:12px">
+                  <label>시행한 치료 항목 (복수 선택)</label>
+                  <div class="checkbox-group" id="journal-template-form-items" style="margin-top:8px">
+                    <label class="checkbox-item"><input type="checkbox" checked> ROM 운동</label>
+                    <label class="checkbox-item"><input type="checkbox" checked> 근력운동</label>
+                    <label class="checkbox-item"><input type="checkbox"> 균형훈련</label>
+                    <label class="checkbox-item"><input type="checkbox" checked> 보행훈련</label>
+                    <label class="checkbox-item"><input type="checkbox"> 보호자 교육</label>
+                  </div>
+                </div>
+                <div class="form-group-sm">
+                  <label>수행 내용</label>
+                  <textarea class="form-ctrl" placeholder="ROM 운동, 근력운동, 균형훈련, 보행훈련, 보호자 교육 등 시행 내용을 구체적으로 기록해 주세요." style="height:100px"></textarea>
+                </div>
+                <div class="form-group-sm">
+                  <label>특이사항</label>
+                  <textarea class="form-ctrl" placeholder="대상자의 치료 반응, 이상 반응, 보호자 전달 사항, 환경 위험요인 등을 기록해 주세요."></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <div class="journal-section">
+              <div class="journal-section-header">📊 목표 달성도 평가</div>
+              <div class="journal-section-body">
+                <div class="rating-bar"><div class="rating-label">하지 근력 (MMT)</div><input type="range" min="0" max="100" value="65" style="flex:1" oninput="this.nextElementSibling.textContent=this.value+'%'"><div class="rating-value">65%</div></div>
+                <div class="rating-bar"><div class="rating-label">보행 능력</div><input type="range" min="0" max="100" value="70" style="flex:1" oninput="this.nextElementSibling.textContent=this.value+'%'"><div class="rating-value">70%</div></div>
+                <div class="rating-bar"><div class="rating-label">균형 능력</div><input type="range" min="0" max="100" value="55" style="flex:1" oninput="this.nextElementSibling.textContent=this.value+'%'"><div class="rating-value">55%</div></div>
+                <div class="rating-bar"><div class="rating-label">통증 감소</div><input type="range" min="0" max="100" value="60" style="flex:1" oninput="this.nextElementSibling.textContent=this.value+'%'"><div class="rating-value">60%</div></div>
+              </div>
+            </div>
+            
+            <div class="journal-section">
+              <div class="journal-section-header">📅 다음 방문 계획</div>
+              <div class="journal-section-body">
+                <div class="form-row">
+                  <div class="form-group-sm"><label>다음 방문 예정일</label><input type="date" class="form-ctrl" value="2025-05-17"></div>
+                  <div class="form-group-sm"><label>다음 방문 예정 시간</label><input type="time" class="form-ctrl" value="09:30"></div>
+                </div>
+                <div class="form-group-sm">
+                  <label>다음 방문 치료 계획</label>
+                  <textarea class="form-ctrl" placeholder="다음 방문에서 시행할 치료 계획을 기술해 주세요."></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <div style="display:flex;gap:10px;justify-content:flex-end;padding-bottom:8px">
+              <button class="topbar-btn" onclick="saveToast('임시저장되었습니다.')">임시 저장</button>
+              <button class="topbar-btn filled" onclick="saveToast('활동일지가 제출되었습니다.')">제출하기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- EVALUATION PAGE -->
+        <div class="page" id="page-evaluation">
+          <div class="page-toolbar">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" placeholder="대상자명으로 검색...">
+            </div>
+            <select class="filter-select" id="evaluation-filter-select"><option>전체 평가 유형</option><option>FIM</option><option>MMT</option><option>MMSE</option><option>BBS</option><option>K-MBI</option><option>TUG</option><option>10MWT</option><option>6MWT</option><option>FAC</option><option>MAS</option><option>NRS</option><option>K-FRAIL</option><option>낙상위험평가</option><option>ADL/IADL 평가</option></select>
+            <button class="topbar-btn filled" onclick="openModal('modal-add-eval')">+ 평가 입력</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead>
+                  <tr><th>대상자</th><th>평가도구</th><th>초기 평가</th><th>최근 평가</th><th>평가일</th><th>담당치료사</th><th>변화</th><th>관리</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><b>홍길동</b></td>
+                    <td><span class="badge blue">FIM</span></td>
+                    <td>72점</td><td>89점</td><td>2025.05.10</td><td>이민정</td>
+                    <td><span class="stat-up">▲ 17점 향상</span></td>
+                    <td><button class="detail-btn">상세</button> <button class="detail-btn">출력</button></td>
+                  </tr>
+                  <tr>
+                    <td><b>홍길동</b></td>
+                    <td><span class="badge teal">BBS</span></td>
+                    <td>32점</td><td>41점</td><td>2025.05.10</td><td>이민정</td>
+                    <td><span class="stat-up">▲ 9점 향상</span></td>
+                    <td><button class="detail-btn">상세</button> <button class="detail-btn">출력</button></td>
+                  </tr>
+                  <tr>
+                    <td><b>김영숙</b></td>
+                    <td><span class="badge blue">K-MBI</span></td>
+                    <td>65점</td><td>78점</td><td>2025.05.12</td><td>박준혁</td>
+                    <td><span class="stat-up">▲ 13점 향상</span></td>
+                    <td><button class="detail-btn">상세</button> <button class="detail-btn">출력</button></td>
+                  </tr>
+                  <tr>
+                    <td><b>이철수</b></td>
+                    <td><span class="badge green">MMT</span></td>
+                    <td>3/5</td><td>4/5</td><td>2025.05.08</td><td>최은지</td>
+                    <td><span class="stat-up">▲ 1단계 향상</span></td>
+                    <td><button class="detail-btn">상세</button> <button class="detail-btn">출력</button></td>
+                  </tr>
+                  <tr>
+                    <td><b>정명화</b></td>
+                    <td><span class="badge amber">MMSE</span></td>
+                    <td>21점</td><td>23점</td><td>2025.05.11</td><td>김도현</td>
+                    <td><span class="stat-up">▲ 2점 향상</span></td>
+                    <td><button class="detail-btn">상세</button> <button class="detail-btn">출력</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- BILLING PAGE -->
+        <div class="page" id="page-billing">
+          <div class="billing-summary">
+            <div class="billing-box">
+              <div class="billing-box-label">이번 달 청구 예정</div>
+              <div class="billing-box-value blue">4,217,000원</div>
+            </div>
+            <div class="billing-box">
+              <div class="billing-box-label">지난달 정산 완료</div>
+              <div class="billing-box-value green">3,980,000원</div>
+            </div>
+            <div class="billing-box">
+              <div class="billing-box-label">미정산 (확인 필요)</div>
+              <div class="billing-box-value amber">320,000원</div>
+            </div>
+          </div>
+          <div class="page-toolbar">
+            <select class="filter-select"><option>2025년 5월</option><option>2025년 4월</option><option>2025년 3월</option></select>
+            <select class="filter-select"><option>전체 구·군</option><option>중구</option><option>남구</option><option>북구</option><option>동구</option><option>울주군</option></select>
+            <select class="filter-select"><option>전체 상태</option><option>청구 완료</option><option>검토 중</option><option>미청구</option></select>
+            <button class="topbar-btn" onclick="saveToast('엑셀 파일로 내보냅니다.')">📊 엑셀 내보내기</button>
+            <button class="topbar-btn filled" onclick="saveToast('청구서가 생성되었습니다.')">+ 청구서 생성</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead>
+                  <tr><th>청구번호</th><th>대상자</th><th>치료사</th><th>서비스 기간</th><th>방문 횟수</th><th>청구 금액</th><th>지자체</th><th>상태</th><th>관리</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>BIL-2025-0528</td><td>홍길동</td><td>이민정</td><td>5/1~5/15</td><td>8회</td><td>176,000원</td><td>중구청</td><td><span class="badge green">청구완료</span></td><td><button class="detail-btn">영수증</button></td></tr>
+                  <tr><td>BIL-2025-0527</td><td>김영숙</td><td>박준혁</td><td>5/1~5/15</td><td>6회</td><td>132,000원</td><td>남구청</td><td><span class="badge amber">검토중</span></td><td><button class="detail-btn sm-primary">확인</button></td></tr>
+                  <tr><td>BIL-2025-0526</td><td>최병철</td><td>이민정</td><td>5/1~5/15</td><td>5회</td><td>110,000원</td><td>동구청</td><td><span class="badge green">청구완료</span></td><td><button class="detail-btn">영수증</button></td></tr>
+                  <tr><td>BIL-2025-0525</td><td>정명화</td><td>김도현</td><td>5/1~5/15</td><td>4회</td><td>88,000원</td><td>울주군청</td><td><span class="badge gray">미청구</span></td><td><button class="detail-btn sm-primary">청구</button></td></tr>
+                  <tr><td>BIL-2025-0524</td><td>이철수</td><td>최은지</td><td>5/1~5/15</td><td>4회</td><td>88,000원</td><td>북구청</td><td><span class="badge amber">검토중</span></td><td><button class="detail-btn sm-primary">확인</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- MUNICIPALITIES PAGE -->
+        <div class="page" id="page-municipalities">
+          <div class="page-toolbar">
+            <select class="filter-select"><option>전체 구·군</option><option>중구</option><option>남구</option><option>동구</option><option>북구</option><option>울주군</option></select>
+            <select class="filter-select"><option>전체 상태</option><option>운영중</option><option>협의중</option><option>점검필요</option></select>
+            <button class="topbar-btn" onclick="saveToast('지자체 현황을 내보냅니다.')">📊 현황 내보내기</button>
+            <button class="topbar-btn filled" onclick="saveToast('지자체 정보 등록 화면을 준비합니다.')">+ 지자체 등록</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead><tr><th>구·군</th><th>담당 기관</th><th>연계 부서</th><th>대상자</th><th>진행</th><th>월 예산</th><th>상태</th><th>관리</th></tr></thead>
+                <tbody>
+                  <tr><td>중구</td><td>중구청</td><td>보건복지과</td><td>12명</td><td>9명</td><td>2,400,000원</td><td><span class="badge green">운영중</span></td><td><button class="detail-btn">상세</button></td></tr>
+                  <tr><td>남구</td><td>남구보건소</td><td>건강관리팀</td><td>14명</td><td>11명</td><td>2,800,000원</td><td><span class="badge green">운영중</span></td><td><button class="detail-btn">상세</button></td></tr>
+                  <tr><td>동구</td><td>동구보건소</td><td>지역보건팀</td><td>8명</td><td>6명</td><td>1,900,000원</td><td><span class="badge amber">점검필요</span></td><td><button class="detail-btn sm-primary">확인</button></td></tr>
+                  <tr><td>북구</td><td>북구청</td><td>노인장애인과</td><td>7명</td><td>4명</td><td>1,600,000원</td><td><span class="badge blue">협의중</span></td><td><button class="detail-btn">상세</button></td></tr>
+                  <tr><td>울주군</td><td>울주군청</td><td>복지정책과</td><td>7명</td><td>5명</td><td>1,700,000원</td><td><span class="badge green">운영중</span></td><td><button class="detail-btn">상세</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- DISTRICT MANAGERS PAGE -->
+        <div class="page" id="page-district-managers">
+          <div class="page-toolbar">
+            <input class="search-input" placeholder="담당자, 기관명, 연락처로 검색...">
+            <select class="filter-select"><option>전체 구·군</option><option>중구</option><option>남구</option><option>동구</option><option>북구</option><option>울주군</option></select>
+            <button class="topbar-btn filled" onclick="saveToast('담당자 등록 화면을 준비합니다.')">+ 담당자 등록</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead><tr><th>구·군</th><th>담당자</th><th>소속/직책</th><th>연락처</th><th>이메일</th><th>최근 확인</th><th>상태</th><th>관리</th></tr></thead>
+                <tbody>
+                  <tr><td>중구</td><td>정민아</td><td>중구청 주무관</td><td>052-000-1101</td><td>junggu@example.kr</td><td>2025.05.14</td><td><span class="badge green">활성</span></td><td><button class="detail-btn">수정</button></td></tr>
+                  <tr><td>남구</td><td>오세진</td><td>남구보건소 팀장</td><td>052-000-2201</td><td>namgu@example.kr</td><td>2025.05.13</td><td><span class="badge green">활성</span></td><td><button class="detail-btn">수정</button></td></tr>
+                  <tr><td>동구</td><td>한지은</td><td>동구보건소 주무관</td><td>052-000-3301</td><td>donggu@example.kr</td><td>2025.05.10</td><td><span class="badge amber">확인필요</span></td><td><button class="detail-btn sm-primary">확인</button></td></tr>
+                  <tr><td>북구</td><td>강태훈</td><td>북구청 주무관</td><td>052-000-4401</td><td>bukgu@example.kr</td><td>2025.05.08</td><td><span class="badge green">활성</span></td><td><button class="detail-btn">수정</button></td></tr>
+                  <tr><td>울주군</td><td>문서연</td><td>울주군청 주무관</td><td>052-000-5501</td><td>ulju@example.kr</td><td>2025.05.14</td><td><span class="badge green">활성</span></td><td><button class="detail-btn">수정</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACTIVITY APPROVAL PAGE -->
+        <div class="page" id="page-activity-approval">
+          <div class="page-toolbar">
+            <select class="filter-select"><option>2025년 5월</option><option>2025년 4월</option><option>2025년 3월</option></select>
+            <select class="filter-select"><option>전체 승인상태</option><option>승인대기</option><option>승인완료</option><option>보완요청</option></select>
+            <button class="topbar-btn" onclick="saveToast('선택한 활동을 일괄 승인합니다.')">일괄 승인</button>
+            <button class="topbar-btn filled" onclick="saveToast('승인 결과를 지자체 보고용으로 정리합니다.')">승인 결과 정리</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead><tr><th>활동일</th><th>치료사</th><th>대상자</th><th>구·군</th><th>방문 회차</th><th>제출일</th><th>상태</th><th>승인</th></tr></thead>
+                <tbody>
+                  <tr><td>2025.05.15</td><td>이민정</td><td>홍길동</td><td>중구</td><td>8회차</td><td>2025.05.15</td><td><span class="badge amber">승인대기</span></td><td><button class="detail-btn sm-primary">승인</button></td></tr>
+                  <tr><td>2025.05.14</td><td>박준혁</td><td>김영숙</td><td>남구</td><td>6회차</td><td>2025.05.14</td><td><span class="badge green">승인완료</span></td><td><button class="detail-btn">보기</button></td></tr>
+                  <tr><td>2025.05.14</td><td>최은지</td><td>이철수</td><td>북구</td><td>4회차</td><td>2025.05.14</td><td><span class="badge red">보완요청</span></td><td><button class="detail-btn sm-primary">확인</button></td></tr>
+                  <tr><td>2025.05.13</td><td>김도현</td><td>정명화</td><td>울주군</td><td>4회차</td><td>2025.05.13</td><td><span class="badge amber">승인대기</span></td><td><button class="detail-btn sm-primary">승인</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONSENTS PAGE -->
+        <div class="page" id="page-consents">
+          <div class="page-toolbar">
+            <input class="search-input" placeholder="대상자, 보호자, 주소로 검색...">
+            <select class="filter-select"><option>전체 상태</option><option>수령완료</option><option>요청중</option><option>만료예정</option><option>미수령</option></select>
+            <button class="topbar-btn" onclick="saveToast('동의서 양식을 내려받습니다.')">양식 다운로드</button>
+            <button class="topbar-btn filled" onclick="saveToast('동의서 등록 화면을 준비합니다.')">+ 동의서 등록</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead><tr><th>대상자</th><th>보호자</th><th>관계</th><th>구·군</th><th>동의 항목</th><th>수령일</th><th>상태</th><th>관리</th></tr></thead>
+                <tbody>
+                  <tr><td>홍길동</td><td>홍민수</td><td>자녀</td><td>중구</td><td>서비스 제공, 개인정보</td><td>2025.05.02</td><td><span class="badge green">수령완료</span></td><td><button class="detail-btn">보기</button></td></tr>
+                  <tr><td>김영숙</td><td>김지현</td><td>자녀</td><td>남구</td><td>서비스 제공, 촬영 동의</td><td>2025.05.03</td><td><span class="badge green">수령완료</span></td><td><button class="detail-btn">보기</button></td></tr>
+                  <tr><td>박순희</td><td>박정우</td><td>배우자</td><td>동구</td><td>서비스 제공</td><td>-</td><td><span class="badge amber">요청중</span></td><td><button class="detail-btn sm-primary">요청</button></td></tr>
+                  <tr><td>이철수</td><td>이수빈</td><td>자녀</td><td>북구</td><td>개인정보</td><td>2025.02.15</td><td><span class="badge blue">만료예정</span></td><td><button class="detail-btn sm-primary">갱신</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPLETION REPORTS PAGE -->
+        <div class="page" id="page-completion-reports">
+          <div class="page-toolbar">
+            <select class="filter-select"><option>전체 구·군</option><option>중구</option><option>남구</option><option>동구</option><option>북구</option><option>울주군</option></select>
+            <select class="filter-select"><option>전체 보고상태</option><option>작성중</option><option>검토중</option><option>제출완료</option></select>
+            <button class="topbar-btn" onclick="saveToast('종결 보고서를 PDF로 내보냅니다.')">PDF 내보내기</button>
+            <button class="topbar-btn filled" onclick="saveToast('서비스 종결 보고서를 생성합니다.')">+ 종결 보고 작성</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead><tr><th>보고번호</th><th>대상자</th><th>구·군</th><th>서비스 기간</th><th>총 방문</th><th>종결 사유</th><th>보고상태</th><th>관리</th></tr></thead>
+                <tbody>
+                  <tr><td>END-2025-018</td><td>최병철</td><td>동구</td><td>2025.03.01~05.10</td><td>10회</td><td>목표 달성</td><td><span class="badge amber">검토중</span></td><td><button class="detail-btn sm-primary">검토</button></td></tr>
+                  <tr><td>END-2025-017</td><td>조명자</td><td>울주군</td><td>2025.02.20~05.08</td><td>12회</td><td>기관 연계 전환</td><td><span class="badge green">제출완료</span></td><td><button class="detail-btn">보기</button></td></tr>
+                  <tr><td>END-2025-016</td><td>김태호</td><td>남구</td><td>2025.04.01~05.12</td><td>6회</td><td>보호자 요청</td><td><span class="badge blue">작성중</span></td><td><button class="detail-btn sm-primary">작성</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- MONTHLY REPORTS PAGE -->
+        <div class="page" id="page-monthly-reports">
+          <div class="billing-summary">
+            <div class="billing-box">
+              <div class="billing-box-label">5월 총 방문</div>
+              <div class="billing-box-value blue">186회</div>
+            </div>
+            <div class="billing-box">
+              <div class="billing-box-label">운영 대상자</div>
+              <div class="billing-box-value green">48명</div>
+            </div>
+            <div class="billing-box">
+              <div class="billing-box-label">종결 보고</div>
+              <div class="billing-box-value amber">3건</div>
+            </div>
+          </div>
+          <div class="page-toolbar">
+            <select class="filter-select"><option>2025년 5월</option><option>2025년 4월</option><option>2025년 3월</option></select>
+            <select class="filter-select"><option>전체 구·군</option><option>중구</option><option>남구</option><option>동구</option><option>북구</option><option>울주군</option></select>
+            <button class="topbar-btn" onclick="saveToast('월별 실적을 엑셀로 내보냅니다.')">📊 엑셀 내보내기</button>
+            <button class="topbar-btn filled" onclick="saveToast('월별 실적 보고서가 생성되었습니다.')">보고서 생성</button>
+          </div>
+          <div class="card">
+            <div class="card-body" style="padding:0">
+              <table class="data-table">
+                <thead><tr><th>구·군</th><th>대상자</th><th>신규</th><th>방문 횟수</th><th>활동 승인</th><th>종결</th><th>청구 금액</th><th>보고</th></tr></thead>
+                <tbody>
+                  <tr><td>중구</td><td>12명</td><td>3명</td><td>46회</td><td>42회</td><td>1건</td><td>1,012,000원</td><td><button class="detail-btn">보기</button></td></tr>
+                  <tr><td>남구</td><td>14명</td><td>2명</td><td>52회</td><td>50회</td><td>1건</td><td>1,144,000원</td><td><button class="detail-btn">보기</button></td></tr>
+                  <tr><td>동구</td><td>8명</td><td>1명</td><td>31회</td><td>27회</td><td>1건</td><td>682,000원</td><td><button class="detail-btn">보기</button></td></tr>
+                  <tr><td>북구</td><td>7명</td><td>1명</td><td>28회</td><td>25회</td><td>0건</td><td>616,000원</td><td><button class="detail-btn">보기</button></td></tr>
+                  <tr><td>울주군</td><td>7명</td><td>2명</td><td>29회</td><td>28회</td><td>0건</td><td>638,000원</td><td><button class="detail-btn">보기</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS PAGE -->
+        <div class="page" id="page-settings">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="card">
+              <div class="card-header"><div class="card-title">⚙️ 시스템 기본 설정</div></div>
+              <div class="card-body">
+                <div class="modal-form-group"><label>기관명</label><input class="modal-input" value="울산 방문재활 관리 거점"></div>
+                <div class="modal-form-group"><label>대표 이메일</label><input class="modal-input" value="ulsan-rehab@example.kr"></div>
+                <div class="modal-form-group"><label>연락처</label><input class="modal-input" value="052-XXX-XXXX"></div>
+                <div class="modal-form-group"><label>주소</label><input class="modal-input" value="울산광역시 남구 (상세 주소 입력)"></div>
+                <button class="topbar-btn filled" onclick="saveToast('설정이 저장되었습니다.')">저장</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">👥 사용자 권한 관리</div></div>
+              <div class="card-body">
+                <div class="notice-box" style="margin-bottom:12px">
+                  <div class="notice-title">권한 최종 결정자</div>
+                  <div class="notice-text">회원 권한의 부여, 변경, 회수는 울산광역시회 관리자만 최종 확정할 수 있습니다.</div>
+                </div>
+                <div style="overflow-x:auto">
+                <table class="data-table" style="min-width:980px">
+                  <thead><tr><th>이름</th><th>소속/역할</th><th>현재 권한</th><th>권한 변경</th><th>상태</th><th>최종 승인</th></tr></thead>
+                  <tbody>
+                    <tr><td>노병환</td><td>울산광역시회</td><td><span class="badge blue" style="white-space:nowrap">울산광역시회 관리자</span></td><td><select class="modal-select" style="min-width:190px"><option>울산광역시회 관리자</option><option>구·군 담당자</option><option>팀장 치료사</option><option>방문 치료사</option><option>회계 담당자</option><option>지자체 확인용 계정</option></select></td><td><span class="badge green">활성</span></td><td><button class="detail-btn sm-primary" style="white-space:nowrap" onclick="saveToast('권한이 최종 승인되었습니다.')">승인</button></td></tr>
+                    <tr><td>정민아</td><td>중구 담당</td><td><span class="badge amber" style="white-space:nowrap">구·군 담당자</span></td><td><select class="modal-select" style="min-width:190px"><option>구·군 담당자</option><option>울산광역시회 관리자</option><option>팀장 치료사</option><option>방문 치료사</option><option>회계 담당자</option><option>지자체 확인용 계정</option></select></td><td><span class="badge green">활성</span></td><td><button class="detail-btn sm-primary" style="white-space:nowrap" onclick="saveToast('권한이 최종 승인되었습니다.')">승인</button></td></tr>
+                    <tr><td>이민정</td><td>중구·남구 팀장</td><td><span class="badge teal" style="white-space:nowrap">팀장 치료사</span></td><td><select class="modal-select" style="min-width:190px"><option>팀장 치료사</option><option>울산광역시회 관리자</option><option>구·군 담당자</option><option>방문 치료사</option><option>회계 담당자</option><option>지자체 확인용 계정</option></select></td><td><span class="badge green">활성</span></td><td><button class="detail-btn sm-primary" style="white-space:nowrap" onclick="saveToast('권한이 최종 승인되었습니다.')">승인</button></td></tr>
+                    <tr><td>박준혁</td><td>방문재활</td><td><span class="badge green" style="white-space:nowrap">방문 치료사</span></td><td><select class="modal-select" style="min-width:190px"><option>방문 치료사</option><option>울산광역시회 관리자</option><option>구·군 담당자</option><option>팀장 치료사</option><option>회계 담당자</option><option>지자체 확인용 계정</option></select></td><td><span class="badge green">활성</span></td><td><button class="detail-btn sm-primary" style="white-space:nowrap" onclick="saveToast('권한이 최종 승인되었습니다.')">승인</button></td></tr>
+                    <tr><td>최은영</td><td>회계</td><td><span class="badge blue" style="white-space:nowrap">회계 담당자</span></td><td><select class="modal-select" style="min-width:190px"><option>회계 담당자</option><option>울산광역시회 관리자</option><option>구·군 담당자</option><option>팀장 치료사</option><option>방문 치료사</option><option>지자체 확인용 계정</option></select></td><td><span class="badge green">활성</span></td><td><button class="detail-btn sm-primary" style="white-space:nowrap" onclick="saveToast('권한이 최종 승인되었습니다.')">승인</button></td></tr>
+                    <tr><td>중구청 확인</td><td>중구청</td><td><span class="badge gray" style="white-space:nowrap">지자체 확인용 계정</span></td><td><select class="modal-select" style="min-width:190px"><option>지자체 확인용 계정</option><option>울산광역시회 관리자</option><option>구·군 담당자</option><option>팀장 치료사</option><option>방문 치료사</option><option>회계 담당자</option></select></td><td><span class="badge amber">승인대기</span></td><td><button class="detail-btn sm-primary" style="white-space:nowrap" onclick="saveToast('권한이 최종 승인되었습니다.')">승인</button></td></tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">💰 비용청구 기준 관리</div></div>
+              <div class="card-body">
+                <div style="overflow-x:auto;margin-bottom:14px">
+                  <table class="data-table" style="min-width:860px">
+                    <thead><tr><th>서비스 유형</th><th>1회 방문 단가</th><th>월 최대 방문 횟수</th><th>치료사 지급 기준</th><th>관리</th></tr></thead>
+                    <tbody id="billing-service-rules">
+                      <tr>
+                        <td><input class="modal-input" value="방문물리치료" style="margin:0;min-width:130px"></td>
+                        <td><input class="modal-input" value="울산 사업 기준 입력" style="margin:0;min-width:150px"></td>
+                        <td><input class="modal-input" value="월 최대 횟수 입력" style="margin:0;min-width:150px"></td>
+                        <td><select class="modal-select" style="min-width:170px"><option>방문 승인 건별 지급</option><option>월 정산 후 지급</option><option>지자체 입금 후 지급</option><option>직접 입력</option></select></td>
+                        <td><button class="detail-btn" style="min-width:52px;white-space:nowrap" onclick="removeBillingServiceRule(this)">삭제</button></td>
+                      </tr>
+                      <tr>
+                        <td><input class="modal-input" value="재활운동지도" style="margin:0;min-width:130px"></td>
+                        <td><input class="modal-input" value="울산 사업 기준 입력" style="margin:0;min-width:150px"></td>
+                        <td><input class="modal-input" value="월 최대 횟수 입력" style="margin:0;min-width:150px"></td>
+                        <td><select class="modal-select" style="min-width:170px"><option>방문 승인 건별 지급</option><option>월 정산 후 지급</option><option>지자체 입금 후 지급</option><option>직접 입력</option></select></td>
+                        <td><button class="detail-btn" style="min-width:52px;white-space:nowrap" onclick="removeBillingServiceRule(this)">삭제</button></td>
+                      </tr>
+                      <tr>
+                        <td><input class="modal-input" value="가정방문재활" style="margin:0;min-width:130px"></td>
+                        <td><input class="modal-input" value="울산 사업 기준 입력" style="margin:0;min-width:150px"></td>
+                        <td><input class="modal-input" value="월 최대 횟수 입력" style="margin:0;min-width:150px"></td>
+                        <td><select class="modal-select" style="min-width:170px"><option>방문 승인 건별 지급</option><option>월 정산 후 지급</option><option>지자체 입금 후 지급</option><option>직접 입력</option></select></td>
+                        <td><button class="detail-btn" style="min-width:52px;white-space:nowrap" onclick="removeBillingServiceRule(this)">삭제</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <button class="topbar-btn" onclick="addBillingServiceRule()">+ 서비스 기준 추가</button>
+
+                <div class="section-divider">청구 정책</div>
+                <div class="modal-form-row">
+                  <div class="modal-form-group"><label>협회 관리비 여부</label><select class="modal-select" id="billing-admin-fee"><option>미포함</option><option>포함</option><option>지자체별 다름</option></select></div>
+                  <div class="modal-form-group"><label>관리비 기준</label><input class="modal-input" id="billing-admin-fee-rule" placeholder="예: 청구액의 0%, 정액, 별도 협의"></div>
+                </div>
+                <div class="modal-form-row">
+                  <div class="modal-form-group"><label>지자체 청구 양식</label><select class="modal-select" id="billing-claim-form"><option>울산 공통 양식</option><option>구·군별 개별 양식</option><option>엑셀 정산표</option><option>PDF 보고서</option></select></div>
+                  <div class="modal-form-group"><label>교통비 포함 여부</label><select class="modal-select" id="billing-transport"><option>단가에 포함</option><option>별도 청구</option><option>미포함</option><option>지자체별 다름</option></select></div>
+                </div>
+                <div class="modal-form-group"><label>교통비 기준</label><input class="modal-input" id="billing-transport-rule" placeholder="예: 방문당 정액, 실비, 거리 기준, 미적용"></div>
+                <button class="topbar-btn filled" onclick="saveBillingSettings()">비용청구 기준 저장</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">📝 활동일지 양식 항목 관리</div></div>
+              <div class="card-body">
+                <div style="display:flex;gap:8px;margin-bottom:12px">
+                  <input id="new-journal-item" class="modal-input" placeholder="추가할 항목명 입력" style="margin:0">
+                  <button class="topbar-btn filled" style="min-width:64px;white-space:nowrap" onclick="addJournalTemplateItem()">추가</button>
+                </div>
+                <div id="journal-template-items" style="display:flex;flex-direction:column;gap:8px">
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>방문 목적</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>대상자 상태 확인</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>혈압/맥박/통증</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>ROM 운동</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>근력운동</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>균형훈련</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>보행훈련</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>보호자 교육</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>특이사항</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                  <div class="journal-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>다음 방문 계획</span><button class="detail-btn" onclick="removeJournalTemplateItem(this)">삭제</button></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+                  <button class="topbar-btn" onclick="saveToast('활동일지 양식 항목 설정이 저장되었습니다.')">항목 설정 저장</button>
+                  <button class="topbar-btn filled" onclick="openJournalTemplatePreview()">활동일지 화면에서 확인</button>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">📈 평가도구 관리</div></div>
+              <div class="card-body">
+                <div style="display:flex;gap:8px;margin-bottom:12px">
+                  <input id="new-evaluation-tool" class="modal-input" placeholder="추가할 평가도구명 입력" style="margin:0">
+                  <button class="topbar-btn filled" style="min-width:64px;white-space:nowrap" onclick="addEvaluationTool()">추가</button>
+                </div>
+                <div id="evaluation-tool-items" style="display:flex;flex-direction:column;gap:8px">
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>FIM</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>MMT</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>MMSE</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>BBS</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>K-MBI</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>TUG</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>10MWT</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>6MWT</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>FAC</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>MAS</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>NRS</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>K-FRAIL</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>낙상위험평가</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                  <div class="evaluation-tool-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>ADL/IADL 평가</span><button class="detail-btn" onclick="removeEvaluationTool(this)">삭제</button></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+                  <button class="topbar-btn" onclick="saveToast('평가도구 설정이 저장되었습니다.')">평가도구 설정 저장</button>
+                  <button class="topbar-btn filled" onclick="openEvaluationToolPreview()">평가 입력창에서 확인</button>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">🖨️ 출력 양식 관리</div></div>
+              <div class="card-body">
+                <div style="display:flex;gap:8px;margin-bottom:12px">
+                  <input id="new-print-template" class="modal-input" placeholder="추가할 출력물명 입력" style="margin:0">
+                  <button class="topbar-btn filled" style="min-width:64px;white-space:nowrap" onclick="addPrintTemplate()">추가</button>
+                </div>
+                <div id="print-template-items" style="display:flex;flex-direction:column;gap:8px">
+                  <div class="print-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>활동일지 PDF 출력</span><button class="detail-btn" onclick="removePrintTemplate(this)">삭제</button></div>
+                  <div class="print-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>대상자별 월간 보고서</span><button class="detail-btn" onclick="removePrintTemplate(this)">삭제</button></div>
+                  <div class="print-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>치료사별 방문 실적표</span><button class="detail-btn" onclick="removePrintTemplate(this)">삭제</button></div>
+                  <div class="print-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>구·군별 청구서</span><button class="detail-btn" onclick="removePrintTemplate(this)">삭제</button></div>
+                  <div class="print-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>평가 변화 보고서</span><button class="detail-btn" onclick="removePrintTemplate(this)">삭제</button></div>
+                  <div class="print-template-row" style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px"><span>종결 보고서</span><button class="detail-btn" onclick="removePrintTemplate(this)">삭제</button></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+                  <button class="topbar-btn" onclick="saveToast('출력 양식 설정이 저장되었습니다.')">출력 양식 설정 저장</button>
+                  <button class="topbar-btn filled" onclick="openPrintTemplatePreview()">출력 목록에서 확인</button>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">📁 데이터 내보내기</div></div>
+              <div class="card-body">
+                <div id="print-export-actions" style="display:flex;flex-direction:column;gap:10px">
+                  <button class="topbar-btn" style="text-align:left;width:100%;height:auto;padding:12px 16px" onclick="saveToast('대상자 데이터를 내보냅니다.')">📊 대상자 전체 목록 (Excel)</button>
+                  <button class="topbar-btn" style="text-align:left;width:100%;height:auto;padding:12px 16px" onclick="saveToast('활동일지를 내보냅니다.')">📝 월별 활동일지 묶음 (PDF)</button>
+                  <button class="topbar-btn" style="text-align:left;width:100%;height:auto;padding:12px 16px" onclick="saveToast('청구 데이터를 내보냅니다.')">💰 비용청구 내역 (Excel)</button>
+                  <button class="topbar-btn" style="text-align:left;width:100%;height:auto;padding:12px 16px" onclick="saveToast('평가자료를 내보냅니다.')">📈 평가자료 보고서 (PDF)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- main-content -->
+    </div><!-- main-wrap -->
+  </div><!-- layout -->
+</div><!-- app -->
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-add-client" onclick="closeModalOutside(event, 'modal-add-client')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">대상자 등록</div>
+      <button class="modal-close" onclick="closeModal('modal-add-client')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="section-divider">기본 정보</div>
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>이름 *</label><input class="modal-input" placeholder="홍길동"></div>
+        <div class="modal-form-group"><label>생년월일 *</label><input class="modal-input" type="date"></div>
+      </div>
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>성별</label>
+          <select class="modal-select"><option>남성</option><option>여성</option></select>
+        </div>
+        <div class="modal-form-group"><label>연락처</label><input class="modal-input" placeholder="010-0000-0000"></div>
+      </div>
+      <div class="modal-form-group"><label>주소 *</label><input class="modal-input" placeholder="울산광역시 중구 태화동 xxx"></div>
+      <div class="section-divider">의료 정보</div>
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>주 진단명 *</label><input class="modal-input" placeholder="뇌경색 후 편마비"></div>
+        <div class="modal-form-group"><label>의뢰기관</label><input class="modal-input" placeholder="중구 보건소"></div>
+      </div>
+      <div class="modal-form-group"><label>특이사항 / 주의사항</label><textarea class="modal-textarea" placeholder="복용 중인 약물, 알레르기, 보호자 정보 등"></textarea></div>
+      <div class="section-divider">서비스 정보</div>
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>서비스 유형</label>
+          <select class="modal-select"><option>방문물리치료</option><option>재활운동지도</option><option>가정방문재활</option></select>
+        </div>
+        <div class="modal-form-group"><label>서비스 시작일</label><input class="modal-input" type="date"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel" onclick="closeModal('modal-add-client')">취소</button>
+        <button class="modal-btn submit" onclick="closeModal('modal-add-client');saveToast('대상자가 등록되었습니다.')">등록하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-add-schedule" onclick="closeModalOutside(event, 'modal-add-schedule')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">방문 일정 추가</div>
+      <button class="modal-close" onclick="closeModal('modal-add-schedule')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>대상자 *</label>
+          <select class="modal-select"><option>홍길동</option><option>김영숙</option><option>이철수</option><option>정명화</option></select>
+        </div>
+        <div class="modal-form-group"><label>담당 치료사 *</label>
+          <select class="modal-select"><option>이민정</option><option>박준혁</option><option>최은지</option><option>김도현</option></select>
+        </div>
+      </div>
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>방문 날짜 *</label><input class="modal-input" type="date"></div>
+        <div class="modal-form-group"><label>방문 시간 *</label><input class="modal-input" type="time"></div>
+      </div>
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>치료 시간(분)</label><input class="modal-input" type="number" value="60"></div>
+        <div class="modal-form-group"><label>반복 설정</label>
+          <select class="modal-select"><option>반복 없음</option><option>매주</option><option>격주</option></select>
+        </div>
+      </div>
+      <div class="modal-form-group"><label>메모</label><textarea class="modal-textarea" placeholder="특별 요청 사항이나 메모를 입력하세요."></textarea></div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel" onclick="closeModal('modal-add-schedule')">취소</button>
+        <button class="modal-btn submit" onclick="closeModal('modal-add-schedule');saveToast('일정이 추가되었습니다.')">추가하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-add-eval" onclick="closeModalOutside(event, 'modal-add-eval')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">평가 결과 입력</div>
+      <button class="modal-close" onclick="closeModal('modal-add-eval')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>대상자 *</label>
+          <select class="modal-select"><option>홍길동</option><option>김영숙</option><option>이철수</option><option>정명화</option></select>
+        </div>
+        <div class="modal-form-group"><label>평가 도구 *</label>
+          <select class="modal-select" id="evaluation-modal-select"><option>FIM (기능적 독립 척도)</option><option>MMT (도수근력검사)</option><option>MMSE (인지기능검사)</option><option>BBS (버그균형척도)</option><option>K-MBI (수정바델지수)</option><option>TUG</option><option>10MWT</option><option>6MWT</option><option>FAC</option><option>MAS</option><option>NRS</option><option>K-FRAIL</option><option>낙상위험평가</option><option>ADL/IADL 평가</option></select>
+        </div>
+      </div>
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>평가일 *</label><input class="modal-input" type="date" value="2025-05-15"></div>
+        <div class="modal-form-group"><label>평가자</label><select class="modal-select"><option>이민정</option><option>박준혁</option><option>최은지</option></select></div>
+      </div>
+      <div class="modal-form-row">
+        <div class="modal-form-group"><label>평가 점수 *</label><input class="modal-input" type="number" placeholder="점수 입력"></div>
+        <div class="modal-form-group"><label>최대 점수</label><input class="modal-input" type="number" placeholder="126" readonly></div>
+      </div>
+      <div class="modal-form-group"><label>평가 소견</label><textarea class="modal-textarea" placeholder="평가 결과에 대한 임상적 소견 및 향후 계획을 입력하세요."></textarea></div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel" onclick="closeModal('modal-add-eval')">취소</button>
+        <button class="modal-btn submit" onclick="closeModal('modal-add-eval');saveToast('평가 결과가 저장되었습니다.')">저장하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-therapist-detail" onclick="closeModalOutside(event, 'modal-therapist-detail')">
+  <div class="modal" style="width:500px">
+    <div class="modal-header">
+      <div class="modal-title">치료사 상세 정보</div>
+      <button class="modal-close" onclick="closeModal('modal-therapist-detail')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:16px;background:var(--blue-light);border-radius:12px">
+        <div style="width:56px;height:56px;background:var(--blue);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:white">이</div>
+        <div>
+          <div style="font-size:18px;font-weight:700;color:var(--gray-900)">이민정</div>
+          <div style="font-size:13px;color:var(--gray-600);margin-top:2px">물리치료사 · 면허번호 PT-28341</div>
+          <div style="margin-top:8px"><span class="badge green">활동중</span></div>
+        </div>
+      </div>
+      <div class="section-divider">담당 현황</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+        <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px">
+          <div style="font-size:20px;font-weight:700;color:var(--blue)">6</div><div style="font-size:11px;color:var(--gray-500);margin-top:3px">담당 대상자</div>
+        </div>
+        <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px">
+          <div style="font-size:20px;font-weight:700;color:var(--green)">24</div><div style="font-size:11px;color:var(--gray-500);margin-top:3px">이번 달 방문</div>
+        </div>
+        <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px">
+          <div style="font-size:20px;font-weight:700;color:var(--amber)">18</div><div style="font-size:11px;color:var(--gray-500);margin-top:3px">제출한 일지</div>
+        </div>
+      </div>
+      <div class="section-divider">담당 대상자</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px">
+          <span><b>홍길동</b> · 중구 태화동</span><span class="badge green">진행중</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px">
+          <span><b>최병철</b> · 동구 전하동</span><span class="badge green">진행중</span>
+        </div>
+      </div>
+      <div class="modal-footer" style="margin-top:16px">
+        <button class="modal-btn cancel" onclick="closeModal('modal-therapist-detail')">닫기</button>
+        <button class="modal-btn submit" onclick="closeModal('modal-therapist-detail');saveToast('담당 구역이 수정되었습니다.')">정보 수정</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const clientsData = [
+  { id:'C-048', name:'홍길동', age:65, address:'중구 태화동', diagnosis:'뇌경색 후 편마비', therapist:'이민정', status:'진행중', reg:'2025.01.05' },
+  { id:'C-047', name:'김영숙', age:72, address:'남구 삼산동', diagnosis:'무릎관절 인공치환술 후', therapist:'박준혁', status:'진행중', reg:'2025.01.20' },
+  { id:'C-046', name:'이철수', age:58, address:'북구 화봉동', diagnosis:'파킨슨병', therapist:'최은지', status:'검토중', reg:'2025.02.10' },
+  { id:'C-045', name:'박순희', age:80, address:'동구 전하동', diagnosis:'뇌경색 후 편마비', therapist:'-', status:'신규접수', reg:'2025.05.13' },
+  { id:'C-044', name:'정명화', age:67, address:'울주군 범서읍', diagnosis:'낙상 후 척추 압박골절', therapist:'김도현', status:'진행중', reg:'2025.02.22' },
+  { id:'C-043', name:'최병철', age:77, address:'동구 전하동', diagnosis:'대퇴골 골절 후 재활', therapist:'이민정', status:'진행중', reg:'2025.03.08' },
+  { id:'C-042', name:'조명자', age:69, address:'울주군 범서읍', diagnosis:'당뇨성 말초신경병증', therapist:'김도현', status:'진행중', reg:'2025.03.15' },
+];
+
+function renderClients() {
+  const tbody = document.getElementById('clients-table-body');
+  const statusMap = { '진행중':'green', '신규접수':'blue', '검토중':'amber', '종결':'gray' };
+  tbody.innerHTML = clientsData.map(c => `
+    <tr>
+      <td style="color:var(--gray-400);font-size:12px">${c.id}</td>
+      <td><b>${c.name}</b> (${c.age}세)</td>
+      <td>${c.address}</td>
+      <td>${c.diagnosis}</td>
+      <td>${c.therapist === '-' ? '<span style="color:var(--gray-400)">배정 전</span>' : c.therapist}</td>
+      <td><span class="badge ${statusMap[c.status]}">${c.status}</span></td>
+      <td>${c.reg}</td>
+      <td>
+        <button class="detail-btn" onclick="saveToast('${c.name} 대상자 상세 화면으로 이동합니다.')">상세</button>
+        <button class="detail-btn sm-primary" onclick="openModal('modal-add-schedule')">배정</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+const pageTitles = {
+  dashboard: '대시보드', clients: '대상자 관리', referrals: '의뢰서 접수',
+  consents: '보호자 동의서 관리', municipalities: '지자체별 관리',
+  'district-managers': '구·군 담당자 관리', therapists: '치료사 관리',
+  schedule: '일정 배정', 'activity-approval': '치료사 활동 승인',
+  journal: '활동일지', evaluation: '평가자료', billing: '비용청구',
+  'completion-reports': '서비스 종결 보고', 'monthly-reports': '월별 실적 보고',
+  settings: '시스템 설정'
+};
+
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (el) el.classList.add('active');
+  document.getElementById('page-title').textContent = pageTitles[name] || name;
+}
+
+function doLogin() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  renderClients();
+  saveToast('울산 방문재활 거점 관리자로 로그인되었습니다.');
+}
+
+function doLogout() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('show');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+function closeModalOutside(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
+}
+
+function showJournalForm() {
+  document.getElementById('journal-list').style.display = 'none';
+  document.getElementById('journal-form-wrap').style.display = 'block';
+}
+function hideJournalForm() {
+  document.getElementById('journal-list').style.display = 'block';
+  document.getElementById('journal-form-wrap').style.display = 'none';
+}
+
+const storageKeys = {
+  journalItems: 'ulsanRehab.journalItems',
+  evaluationTools: 'ulsanRehab.evaluationTools',
+  printTemplates: 'ulsanRehab.printTemplates',
+  billingRules: 'ulsanRehab.billingRules',
+  billingPolicy: 'ulsanRehab.billingPolicy'
+};
+
+const defaultJournalItems = ['방문 목적', '대상자 상태 확인', '혈압/맥박/통증', 'ROM 운동', '근력운동', '균형훈련', '보행훈련', '보호자 교육', '특이사항', '다음 방문 계획'];
+const defaultEvaluationTools = ['FIM', 'MMT', 'MMSE', 'BBS', 'K-MBI', 'TUG', '10MWT', '6MWT', 'FAC', 'MAS', 'NRS', 'K-FRAIL', '낙상위험평가', 'ADL/IADL 평가'];
+const defaultPrintTemplates = ['활동일지 PDF 출력', '대상자별 월간 보고서', '치료사별 방문 실적표', '구·군별 청구서', '평가 변화 보고서', '종결 보고서'];
+const defaultBillingRules = [
+  { service: '방문물리치료', unitPrice: '울산 사업 기준 입력', maxVisits: '월 최대 횟수 입력', payment: '방문 승인 건별 지급' },
+  { service: '재활운동지도', unitPrice: '울산 사업 기준 입력', maxVisits: '월 최대 횟수 입력', payment: '방문 승인 건별 지급' },
+  { service: '가정방문재활', unitPrice: '울산 사업 기준 입력', maxVisits: '월 최대 횟수 입력', payment: '방문 승인 건별 지급' }
+];
+const defaultBillingPolicy = { adminFee: '미포함', adminFeeRule: '', claimForm: '울산 공통 양식', transport: '단가에 포함', transportRule: '' };
+
+function loadSetting(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) || fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function saveSetting(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function setSelectValue(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.value = value;
+}
+
+function createSettingRow(className, text, removeFn) {
+  const row = document.createElement('div');
+  row.className = className;
+  row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--gray-50);border-radius:8px;font-size:13px';
+  const label = document.createElement('span');
+  label.textContent = text;
+  const button = document.createElement('button');
+  button.className = 'detail-btn';
+  button.textContent = '삭제';
+  button.onclick = () => removeFn(text);
+  row.append(label, button);
+  return row;
+}
+
+function renderJournalItems() {
+  const items = loadSetting(storageKeys.journalItems, defaultJournalItems);
+  const settingList = document.getElementById('journal-template-items');
+  const formList = document.getElementById('journal-template-form-items');
+  if (settingList) {
+    settingList.innerHTML = '';
+    items.forEach(item => settingList.appendChild(createSettingRow('journal-template-row', item, removeJournalTemplateItem)));
+  }
+  if (formList) {
+    formList.innerHTML = '';
+    items.forEach((item, idx) => {
+      const label = document.createElement('label');
+      label.className = 'checkbox-item';
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.checked = idx < 4;
+      label.append(input, ' ' + item);
+      formList.appendChild(label);
+    });
+  }
+}
+
+function addJournalTemplateItem() {
+  const input = document.getElementById('new-journal-item');
+  const value = input.value.trim();
+  if (!value) {
+    saveToast('추가할 활동일지 항목명을 입력해 주세요.');
+    return;
+  }
+  const items = loadSetting(storageKeys.journalItems, defaultJournalItems);
+  items.push(value);
+  saveSetting(storageKeys.journalItems, items);
+  renderJournalItems();
+  input.value = '';
+  saveToast('활동일지 항목이 추가되어 작성 화면에 반영되었습니다.');
+}
+
+function removeJournalTemplateItem(item) {
+  const items = loadSetting(storageKeys.journalItems, defaultJournalItems).filter(v => v !== item);
+  saveSetting(storageKeys.journalItems, items);
+  renderJournalItems();
+  saveToast('활동일지 항목이 삭제되어 작성 화면에 반영되었습니다.');
+}
+
+function renderEvaluationTools() {
+  const tools = loadSetting(storageKeys.evaluationTools, defaultEvaluationTools);
+  const settingList = document.getElementById('evaluation-tool-items');
+  const filterSelect = document.getElementById('evaluation-filter-select');
+  const modalSelect = document.getElementById('evaluation-modal-select');
+  if (settingList) {
+    settingList.innerHTML = '';
+    tools.forEach(tool => settingList.appendChild(createSettingRow('evaluation-tool-row', tool, removeEvaluationTool)));
+  }
+  if (filterSelect) {
+    filterSelect.innerHTML = '<option>전체 평가 유형</option>';
+    tools.forEach(tool => filterSelect.add(new Option(tool, tool)));
+  }
+  if (modalSelect) {
+    modalSelect.innerHTML = '';
+    tools.forEach(tool => modalSelect.add(new Option(tool, tool)));
+  }
+}
+
+function addEvaluationTool() {
+  const input = document.getElementById('new-evaluation-tool');
+  const value = input.value.trim();
+  if (!value) {
+    saveToast('추가할 평가도구명을 입력해 주세요.');
+    return;
+  }
+  const tools = loadSetting(storageKeys.evaluationTools, defaultEvaluationTools);
+  tools.push(value);
+  saveSetting(storageKeys.evaluationTools, tools);
+  renderEvaluationTools();
+  input.value = '';
+  saveToast('평가도구가 추가되어 평가 화면에 반영되었습니다.');
+}
+
+function removeEvaluationTool(tool) {
+  const tools = loadSetting(storageKeys.evaluationTools, defaultEvaluationTools).filter(v => v !== tool);
+  saveSetting(storageKeys.evaluationTools, tools);
+  renderEvaluationTools();
+  saveToast('평가도구가 삭제되어 평가 화면에 반영되었습니다.');
+}
+
+function escapeAttr(value) {
+  return String(value || '').replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+}
+
+function renderBillingSettings() {
+  const rules = loadSetting(storageKeys.billingRules, defaultBillingRules);
+  const policy = loadSetting(storageKeys.billingPolicy, defaultBillingPolicy);
+  const tbody = document.getElementById('billing-service-rules');
+  if (tbody) {
+    tbody.innerHTML = '';
+    rules.forEach(rule => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><input class="modal-input" value="${escapeAttr(rule.service)}" style="margin:0;min-width:130px"></td>
+        <td><input class="modal-input" value="${escapeAttr(rule.unitPrice)}" style="margin:0;min-width:150px"></td>
+        <td><input class="modal-input" value="${escapeAttr(rule.maxVisits)}" style="margin:0;min-width:150px"></td>
+        <td><select class="modal-select" style="min-width:170px"><option>방문 승인 건별 지급</option><option>월 정산 후 지급</option><option>지자체 입금 후 지급</option><option>직접 입력</option></select></td>
+        <td><button class="detail-btn" style="min-width:52px;white-space:nowrap" onclick="removeBillingServiceRule(this)">삭제</button></td>
+      `;
+      row.querySelector('select').value = rule.payment || '방문 승인 건별 지급';
+      tbody.appendChild(row);
+    });
+  }
+  setSelectValue('billing-admin-fee', policy.adminFee);
+  setSelectValue('billing-claim-form', policy.claimForm);
+  setSelectValue('billing-transport', policy.transport);
+  const adminFeeRule = document.getElementById('billing-admin-fee-rule');
+  const transportRule = document.getElementById('billing-transport-rule');
+  if (adminFeeRule) adminFeeRule.value = policy.adminFeeRule || '';
+  if (transportRule) transportRule.value = policy.transportRule || '';
+}
+
+function collectBillingRules() {
+  return [...document.querySelectorAll('#billing-service-rules tr')].map(row => {
+    const inputs = row.querySelectorAll('input');
+    return {
+      service: inputs[0]?.value || '',
+      unitPrice: inputs[1]?.value || '',
+      maxVisits: inputs[2]?.value || '',
+      payment: row.querySelector('select')?.value || '방문 승인 건별 지급'
+    };
+  });
+}
+
+function saveBillingSettings() {
+  saveSetting(storageKeys.billingRules, collectBillingRules());
+  saveSetting(storageKeys.billingPolicy, {
+    adminFee: document.getElementById('billing-admin-fee')?.value || '미포함',
+    adminFeeRule: document.getElementById('billing-admin-fee-rule')?.value || '',
+    claimForm: document.getElementById('billing-claim-form')?.value || '울산 공통 양식',
+    transport: document.getElementById('billing-transport')?.value || '단가에 포함',
+    transportRule: document.getElementById('billing-transport-rule')?.value || ''
+  });
+  saveToast('비용청구 기준 설정이 저장되었습니다.');
+}
+
+function addBillingServiceRule() {
+  saveSetting(storageKeys.billingRules, collectBillingRules());
+  const tbody = document.getElementById('billing-service-rules');
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td><input class="modal-input" placeholder="서비스 유형" style="margin:0;min-width:130px"></td>
+    <td><input class="modal-input" placeholder="1회 방문 단가" style="margin:0;min-width:150px"></td>
+    <td><input class="modal-input" placeholder="월 최대 방문 횟수" style="margin:0;min-width:150px"></td>
+    <td><select class="modal-select" style="min-width:170px"><option>방문 승인 건별 지급</option><option>월 정산 후 지급</option><option>지자체 입금 후 지급</option><option>직접 입력</option></select></td>
+    <td><button class="detail-btn" style="min-width:52px;white-space:nowrap" onclick="removeBillingServiceRule(this)">삭제</button></td>
+  `;
+  tbody.appendChild(row);
+  saveSetting(storageKeys.billingRules, collectBillingRules());
+  saveToast('서비스 비용 기준이 추가되었습니다.');
+}
+
+function removeBillingServiceRule(btn) {
+  btn.closest('tr').remove();
+  saveSetting(storageKeys.billingRules, collectBillingRules());
+  saveToast('서비스 비용 기준이 삭제되었습니다.');
+}
+
+function renderPrintTemplates() {
+  const templates = loadSetting(storageKeys.printTemplates, defaultPrintTemplates);
+  const settingList = document.getElementById('print-template-items');
+  const actionList = document.getElementById('print-export-actions');
+  if (settingList) {
+    settingList.innerHTML = '';
+    templates.forEach(template => settingList.appendChild(createSettingRow('print-template-row', template, removePrintTemplate)));
+  }
+  if (actionList) {
+    actionList.innerHTML = '';
+    templates.forEach(template => {
+      const button = document.createElement('button');
+      button.className = 'topbar-btn';
+      button.style.cssText = 'text-align:left;width:100%;height:auto;padding:12px 16px';
+      button.textContent = '🖨️ ' + template;
+      button.onclick = () => saveToast(template + '을 준비합니다.');
+      actionList.appendChild(button);
+    });
+  }
+}
+
+function addPrintTemplate() {
+  const input = document.getElementById('new-print-template');
+  const value = input.value.trim();
+  if (!value) {
+    saveToast('추가할 출력물명을 입력해 주세요.');
+    return;
+  }
+  const templates = loadSetting(storageKeys.printTemplates, defaultPrintTemplates);
+  templates.push(value);
+  saveSetting(storageKeys.printTemplates, templates);
+  renderPrintTemplates();
+  input.value = '';
+  saveToast('출력 양식이 추가되어 내보내기 목록에 반영되었습니다.');
+}
+
+function removePrintTemplate(template) {
+  const templates = loadSetting(storageKeys.printTemplates, defaultPrintTemplates).filter(v => v !== template);
+  saveSetting(storageKeys.printTemplates, templates);
+  renderPrintTemplates();
+  saveToast('출력 양식이 삭제되어 내보내기 목록에 반영되었습니다.');
+}
+
+function setActiveNav(pageName) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const target = [...document.querySelectorAll('.nav-item')].find(n => n.getAttribute('onclick')?.includes(`'${pageName}'`));
+  if (target) target.classList.add('active');
+}
+
+function openJournalTemplatePreview() {
+  renderJournalItems();
+  showPage('journal');
+  setActiveNav('journal');
+  showJournalForm();
+  saveToast('활동일지 작성 화면에 반영된 항목을 표시했습니다.');
+}
+
+function openEvaluationToolPreview() {
+  renderEvaluationTools();
+  showPage('evaluation');
+  setActiveNav('evaluation');
+  openModal('modal-add-eval');
+  saveToast('평가 입력창의 평가도구 목록을 확인해 주세요.');
+}
+
+function openPrintTemplatePreview() {
+  renderPrintTemplates();
+  showPage('settings');
+  setActiveNav('settings');
+  document.getElementById('print-export-actions')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  saveToast('데이터 내보내기 목록에 반영된 출력 양식을 표시했습니다.');
+}
+
+function initStoredSettings() {
+  if (!localStorage.getItem(storageKeys.journalItems)) saveSetting(storageKeys.journalItems, defaultJournalItems);
+  if (!localStorage.getItem(storageKeys.evaluationTools)) saveSetting(storageKeys.evaluationTools, defaultEvaluationTools);
+  if (!localStorage.getItem(storageKeys.printTemplates)) saveSetting(storageKeys.printTemplates, defaultPrintTemplates);
+  if (!localStorage.getItem(storageKeys.billingRules)) saveSetting(storageKeys.billingRules, defaultBillingRules);
+  if (!localStorage.getItem(storageKeys.billingPolicy)) saveSetting(storageKeys.billingPolicy, defaultBillingPolicy);
+  renderJournalItems();
+  renderEvaluationTools();
+  renderBillingSettings();
+  renderPrintTemplates();
+}
+
+function saveToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = (type === 'success' ? '✅ ' : '✔ ') + msg;
+  t.className = 'toast show' + (type === 'success' ? ' success' : '');
+  setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+initStoredSettings();
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
+});
+</script>
+</body>
+</html>
